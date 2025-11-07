@@ -60,11 +60,13 @@ runs:
     - name: Build
       id: build
       working-directory: ${{ inputs.ksrc }}
-      shell: sh
+      shell: bash
       env:
         INPUT_BUILD_TYPE: ${{ inputs.build_type }}
         OUT: ${{ steps.prepare.outputs.out }}
       run: |
+        set -euxo pipefail
+
         debian/rules clean
         dpkg-buildpackage \
             --build="${INPUT_BUILD_TYPE}" \
